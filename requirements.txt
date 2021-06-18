@@ -1,0 +1,4 @@
+pillow
+click
+jina[hub,http]==0.7.8
+opencv-python

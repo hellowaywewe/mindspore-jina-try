@@ -1,1 +1,3 @@
-# mindspore-jina-try
+# MindsporeLeNet
+
+Encoding image into vectors using mindspore 

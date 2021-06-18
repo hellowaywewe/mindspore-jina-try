@@ -1,0 +1,31 @@
+!Flow
+meta:
+  prefetch: 10
+pods:
+  crafter:
+    uses: yaml/craft.yml
+    read_only: true
+  encoder:
+    uses: yaml/encode.yml
+    parallel: $PARALLEL
+    timeout_ready: 600000
+    read_only: true
+  vec_indexer:
+    uses: yaml/vec.yml
+    shards: $SHARDS
+    separated_workspace: true
+    polling: all
+    uses_reducing: _merge_all
+    timeout_ready: 100000
+  doc_indexer:
+    uses: yaml/doc.yml
+    shards: $SHARDS
+    separated_workspace: true
+    polling: all
+    uses_reducing: _merge_all
+    timeout_ready: 100000
+    needs: [gateway]
+  join_all:
+    uses: _merge
+    needs: [doc_indexer, vec_indexer]
+    read_only: true
